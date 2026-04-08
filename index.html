@@ -175,34 +175,147 @@
     margin: 10px 0 0;
   }
 
-  .audio-btn {
-    display: inline-flex;
+  /* POLL SECTION */
+  .poll-section {
+    padding: 30px 40px 10px;
+    text-align: center;
+  }
+
+  .poll-title {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    color: #f5a623;
+    margin: 0 0 6px;
+  }
+
+  .poll-subtitle {
+    font-size: 14px;
+    color: #8892b0;
+    margin: 0 0 24px;
+  }
+
+  .mix-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 520px;
+    text-align: left;
+  }
+
+  .mix-item {
+    display: flex;
     align-items: center;
-    gap: 10px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 50px;
-    padding: 10px 22px;
+    gap: 12px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+  .mix-item:hover {
+    background: rgba(233, 69, 96, 0.1);
+    border-color: rgba(233, 69, 96, 0.3);
+  }
+
+  .mix-item.voted {
+    border-color: #f5a623;
+    background: rgba(245, 166, 35, 0.1);
+  }
+
+  .mix-play {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
     color: #ccd6f6;
-    font-family: 'Poppins', sans-serif;
     font-size: 14px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
   }
 
-  .audio-btn:hover {
-    background: rgba(233, 69, 96, 0.15);
-    border-color: rgba(233, 69, 96, 0.4);
+  .mix-play:hover {
+    background: rgba(233, 69, 96, 0.3);
   }
 
-  .audio-btn .icon {
-    font-size: 18px;
+  .mix-play.playing {
+    background: linear-gradient(135deg, #e94560, #f5a623);
+    color: #fff;
   }
 
-  .audio-btn .now-playing {
+  .mix-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mix-name {
+    font-size: 15px;
+    color: #fff;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .mix-year {
     font-size: 12px;
     color: #8892b0;
+    margin: 2px 0 0;
+  }
+
+  .mix-vote-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: #8892b0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .mix-vote-btn:hover {
+    border-color: #f5a623;
+    color: #f5a623;
+  }
+
+  .mix-vote-btn.voted {
+    background: linear-gradient(135deg, #e94560, #f5a623);
+    border-color: transparent;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2px;
+    margin-top: 4px;
+    overflow: hidden;
+    display: none;
+  }
+
+  .progress-bar.active {
+    display: block;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #e94560, #f5a623);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s linear;
   }
 
   .footer {
@@ -322,49 +435,185 @@
     <p class="signature">&mdash; Jason</p>
   </div>
 
+  <!-- POLL SECTION -->
+  <div class="poll-section">
+    <p class="poll-title">Vote for the party playlist</p>
+    <p class="poll-subtitle">Preview a clip, pick your favorite. DJ Funk takes requests... sometimes.</p>
+
+    <audio id="previewPlayer" preload="none"></audio>
+
+    <ul class="mix-list" id="mixList">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/00A%20Halloween%2099%20Super%20Dub%20ft.%20Funk.mp3" data-id="halloween-99">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">Halloween 99 Super Dub ft. Funk</p>
+          <p class="mix-year">1999 &middot; Mix Tape Series</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'halloween-99')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/01B%2020th%20Historical%20Evidence%201999.mp3" data-id="historical-evidence">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">Historical Evidence</p>
+          <p class="mix-year">1999 &middot; Mix Tape Series</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'historical-evidence')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/03B%20Daytona%20500.mp3" data-id="daytona-500">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">Daytona 500</p>
+          <p class="mix-year">2000 &middot; Mix Tape Series</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'daytona-500')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/05B%20Funk%20In%202000%20%28DJ%20Shadow%20Mix%29.mp3" data-id="shadow-mix">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">Funk In 2000 (DJ Shadow Mix)</p>
+          <p class="mix-year">2000 &middot; Mix Tape Series</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'shadow-mix')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/04A%20The%20Silencer.mp3" data-id="silencer">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">The Silencer</p>
+          <p class="mix-year">2000 &middot; Mix Tape Series</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'silencer')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202002.mp3" data-id="em-2002">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">Essential Mix</p>
+          <p class="mix-year">2002</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'em-2002')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202003.mp3" data-id="em-2003">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">Essential Mix</p>
+          <p class="mix-year">2003</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'em-2003')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202022%20-%20The%207th%20Floor%202d.mp3" data-id="7th-floor">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">The 7th Floor 2d</p>
+          <p class="mix-year">2022</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, '7th-floor')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202023%20-%20Deep%20Freezethon%204a.mp3" data-id="freezethon">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">Deep Freezethon 4a</p>
+          <p class="mix-year">2023</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'freezethon')">Vote</button>
+      </li>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202024%20-%20TheCovid_1j%20(24%20Mix).mp3" data-id="covid-1j">
+        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <div class="mix-info">
+          <p class="mix-name">TheCovid 1j</p>
+          <p class="mix-year">2024</p>
+          <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+        <button class="mix-vote-btn" onclick="vote(this, 'covid-1j')">Vote</button>
+      </li>
+    </ul>
+  </div>
+
   <div class="footer">
-    <audio id="bgMusic" loop preload="auto">
-      <source src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202013%20-%20San%20Fran.mp3" type="audio/mpeg">
-    </audio>
-    <button class="audio-btn" id="audioToggle" onclick="toggleAudio()">
-      <span class="icon" id="audioIcon">&#9654;</span>
-      <span id="audioLabel">Play the vibe</span>
-    </button>
-    <br><br>
     <p class="footer-text">May 1st is the actual birthday. May 2nd is the party. Don't get confused.</p>
   </div>
 
 </div>
 
 <script>
-  const audio = document.getElementById('bgMusic');
-  const icon = document.getElementById('audioIcon');
-  const label = document.getElementById('audioLabel');
-  audio.volume = 0.35;
+  const player = document.getElementById('previewPlayer');
+  let currentBtn = null;
+  let progressInterval = null;
+  const PREVIEW_LENGTH = 20;
 
-  // Try auto-play
-  window.addEventListener('load', () => {
-    const playPromise = audio.play();
-    if (playPromise !== undefined) {
-      playPromise.then(() => {
-        icon.innerHTML = '&#9646;&#9646;';
-        label.textContent = 'Now playing: Essential Mix — San Fran';
-      }).catch(() => {
-        // Auto-play blocked, button stays as "Play the vibe"
-      });
+  player.volume = 0.4;
+
+  player.addEventListener('timeupdate', () => {
+    if (player.currentTime >= PREVIEW_LENGTH) {
+      stopPreview();
     }
   });
 
-  function toggleAudio() {
-    if (audio.paused) {
-      audio.play();
-      icon.innerHTML = '&#9646;&#9646;';
-      label.textContent = 'Now playing: Essential Mix — San Fran';
-    } else {
-      audio.pause();
-      icon.innerHTML = '&#9654;';
-      label.textContent = 'Play the vibe';
+  function togglePreview(btn) {
+    const item = btn.closest('.mix-item');
+    const src = item.dataset.src;
+    const bar = item.querySelector('.progress-bar');
+    const fill = item.querySelector('.progress-fill');
+
+    // If same track is playing, stop it
+    if (currentBtn === btn && !player.paused) {
+      stopPreview();
+      return;
     }
+
+    // Stop any current preview
+    stopPreview();
+
+    // Start new preview
+    player.src = src;
+    player.currentTime = 0;
+    player.play();
+    currentBtn = btn;
+    btn.innerHTML = '&#9646;&#9646;';
+    btn.classList.add('playing');
+    bar.classList.add('active');
+
+    // Update progress
+    progressInterval = setInterval(() => {
+      const pct = Math.min((player.currentTime / PREVIEW_LENGTH) * 100, 100);
+      fill.style.width = pct + '%';
+    }, 100);
+  }
+
+  function stopPreview() {
+    player.pause();
+    player.currentTime = 0;
+    if (currentBtn) {
+      currentBtn.innerHTML = '&#9654;';
+      currentBtn.classList.remove('playing');
+    }
+    document.querySelectorAll('.progress-bar').forEach(b => {
+      b.classList.remove('active');
+      b.querySelector('.progress-fill').style.width = '0%';
+    });
+    clearInterval(progressInterval);
+    currentBtn = null;
+  }
+
+  function vote(btn, mixId) {
+    // Clear all votes
+    document.querySelectorAll('.mix-vote-btn').forEach(b => {
+      b.classList.remove('voted');
+      b.textContent = 'Vote';
+    });
+    document.querySelectorAll('.mix-item').forEach(i => i.classList.remove('voted'));
+
+    // Set this vote
+    btn.classList.add('voted');
+    btn.textContent = 'Voted!';
+    btn.closest('.mix-item').classList.add('voted');
   }
 </script>
 </body>
