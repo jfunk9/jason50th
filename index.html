@@ -175,6 +175,36 @@
     margin: 10px 0 0;
   }
 
+  .audio-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    padding: 10px 22px;
+    color: #ccd6f6;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+  }
+
+  .audio-btn:hover {
+    background: rgba(233, 69, 96, 0.15);
+    border-color: rgba(233, 69, 96, 0.4);
+  }
+
+  .audio-btn .icon {
+    font-size: 18px;
+  }
+
+  .audio-btn .now-playing {
+    font-size: 12px;
+    color: #8892b0;
+  }
+
   .footer {
     text-align: center;
     padding: 20px 30px 35px;
@@ -293,9 +323,49 @@
   </div>
 
   <div class="footer">
+    <audio id="bgMusic" loop preload="auto">
+      <source src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202013%20-%20San%20Fran.mp3" type="audio/mpeg">
+    </audio>
+    <button class="audio-btn" id="audioToggle" onclick="toggleAudio()">
+      <span class="icon" id="audioIcon">&#9654;</span>
+      <span id="audioLabel">Play the vibe</span>
+    </button>
+    <br><br>
     <p class="footer-text">May 1st is the actual birthday. May 2nd is the party. Don't get confused.</p>
   </div>
 
 </div>
+
+<script>
+  const audio = document.getElementById('bgMusic');
+  const icon = document.getElementById('audioIcon');
+  const label = document.getElementById('audioLabel');
+  audio.volume = 0.35;
+
+  // Try auto-play
+  window.addEventListener('load', () => {
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        icon.innerHTML = '&#9646;&#9646;';
+        label.textContent = 'Now playing: Essential Mix — San Fran';
+      }).catch(() => {
+        // Auto-play blocked, button stays as "Play the vibe"
+      });
+    }
+  });
+
+  function toggleAudio() {
+    if (audio.paused) {
+      audio.play();
+      icon.innerHTML = '&#9646;&#9646;';
+      label.textContent = 'Now playing: Essential Mix — San Fran';
+    } else {
+      audio.pause();
+      icon.innerHTML = '&#9654;';
+      label.textContent = 'Play the vibe';
+    }
+  }
+</script>
 </body>
 </html>
