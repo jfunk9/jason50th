@@ -566,15 +566,15 @@
 <script>
   const player = document.getElementById('previewPlayer');
   let currentBtn = null;
+  let currentBar = null;
+  let currentFill = null;
   let progressInterval = null;
-  const PREVIEW_LENGTH = 20;
 
   player.volume = 0.4;
 
-  player.addEventListener('timeupdate', () => {
-    if (player.currentTime >= PREVIEW_LENGTH) {
-      stopPreview();
-    }
+  // When track ends naturally, reset the button
+  player.addEventListener('ended', () => {
+    stopPreview();
   });
 
   function togglePreview(btn) {
@@ -583,29 +583,47 @@
     const bar = item.querySelector('.progress-bar');
     const fill = item.querySelector('.progress-fill');
 
-    // If same track is playing, stop it
+    // If same track is playing, pause it
     if (currentBtn === btn && !player.paused) {
-      stopPreview();
+      player.pause();
+      btn.innerHTML = '&#9654;';
+      btn.classList.remove('playing');
+      clearInterval(progressInterval);
       return;
     }
 
-    // Stop any current preview
+    // If same track is paused, resume it
+    if (currentBtn === btn && player.paused && player.src) {
+      player.play();
+      btn.innerHTML = '&#9646;&#9646;';
+      btn.classList.add('playing');
+      progressInterval = setInterval(() => updateProgress(fill), 200);
+      return;
+    }
+
+    // Stop any current track
     stopPreview();
 
-    // Start new preview
+    // Start new track
     player.src = src;
     player.currentTime = 0;
     player.play();
     currentBtn = btn;
+    currentBar = bar;
+    currentFill = fill;
     btn.innerHTML = '&#9646;&#9646;';
     btn.classList.add('playing');
     bar.classList.add('active');
 
-    // Update progress
-    progressInterval = setInterval(() => {
-      const pct = Math.min((player.currentTime / PREVIEW_LENGTH) * 100, 100);
+    // Update progress based on actual duration
+    progressInterval = setInterval(() => updateProgress(fill), 200);
+  }
+
+  function updateProgress(fill) {
+    if (player.duration && isFinite(player.duration)) {
+      const pct = (player.currentTime / player.duration) * 100;
       fill.style.width = pct + '%';
-    }, 100);
+    }
   }
 
   function stopPreview() {
