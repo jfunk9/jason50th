@@ -40,34 +40,38 @@
   }
 
   .age-badge {
-    display: inline-block;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #e94560, #f5a623);
-    line-height: 140px;
-    text-align: center;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(233, 69, 96, 0.4);
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
   }
 
-  .age-badge span {
-    font-size: 64px;
+  .age-badge .number {
+    font-family: 'Poppins', sans-serif;
     font-weight: 900;
-    color: #fff;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-size: 140px;
+    line-height: 0.85;
+    letter-spacing: -6px;
+    background: linear-gradient(180deg, #fff 30%, #f5a623 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  .confetti {
-    position: absolute;
-    font-size: 28px;
-    animation: none;
+  .accent-line {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #e94560, #f5a623);
+    border-radius: 2px;
+    margin-top: 10px;
   }
-  .confetti-1 { top: -10px; left: -20px; transform: rotate(-15deg); }
-  .confetti-2 { top: -15px; right: -15px; transform: rotate(20deg); }
-  .confetti-3 { bottom: 5px; left: -25px; transform: rotate(10deg); }
-  .confetti-4 { bottom: 0; right: -20px; transform: rotate(-25deg); }
+
+  .badge-subtitle {
+    font-family: 'Caveat', cursive;
+    color: #f5a623;
+    font-size: 24px;
+    margin-top: 8px;
+  }
 
   .headline {
     font-family: 'Caveat', cursive;
@@ -190,8 +194,8 @@
     .headline { font-size: 32px; }
     .subheadline { font-size: 13px; letter-spacing: 1px; }
     .main-text { font-size: 15px; }
-    .age-badge { width: 90px; height: 90px; line-height: 90px; }
-    .age-badge span { font-size: 40px; }
+    .age-badge .number { font-size: 100px; letter-spacing: -4px; }
+    .badge-subtitle { font-size: 20px; }
     .details-card { padding: 18px 16px; }
     .detail-value { font-size: 15px; }
     .detail-note { font-size: 12px; }
@@ -210,12 +214,10 @@
 <div class="email-wrapper">
 
   <div class="header">
-    <div class="age-badge" style="position: relative; display: inline-block;">
-      <span class="confetti confetti-1">&#127881;</span>
-      <span class="confetti confetti-2">&#10024;</span>
-      <span class="confetti confetti-3">&#127882;</span>
-      <span class="confetti confetti-4">&#127879;</span>
-      <span>50</span>
+    <div class="age-badge">
+      <span class="number">50</span>
+      <div class="accent-line"></div>
+      <span class="badge-subtitle">years deep</span>
     </div>
     <h1 class="headline">Oh, it's happening.</h1>
     <p class="subheadline">Jason is turning the big 5-0</p>
@@ -244,7 +246,7 @@
         <div class="detail-icon">&#128205;</div>
         <div>
           <p class="detail-label">Where</p>
-          <p class="detail-value">2900 Irving Ave. S.</p>
+          <p class="detail-value"><a href="https://www.google.com/maps/search/?api=1&query=2900+Irving+Ave+S+Minneapolis+MN" target="_blank" style="color: #fff; text-decoration: none; border-bottom: 1px dashed rgba(255,255,255,0.4);">2900 Irving Ave. S., Minneapolis, MN</a></p>
           <p class="detail-note">Park anywhere, you're good.<br>Hit #408 on the door fob and I'll buzz you in.</p>
         </div>
       </div>
