@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jason's 50th Birthday</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Caveat:wght@700&display=swap');
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #1a1a2e;
+    font-family: 'Poppins', Arial, sans-serif;
+  }
+
+  .email-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .header {
+    text-align: center;
+    padding: 50px 30px 20px;
+    position: relative;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, #e94560, #f5a623, #e94560, #f5a623, #e94560);
+  }
+
+  .age-badge {
+    display: inline-block;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #e94560, #f5a623);
+    line-height: 120px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(233, 69, 96, 0.4);
+    position: relative;
+  }
+
+  .age-badge span {
+    font-size: 56px;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  }
+
+  .confetti {
+    position: absolute;
+    font-size: 24px;
+    animation: none;
+  }
+  .confetti-1 { top: -10px; left: -20px; transform: rotate(-15deg); }
+  .confetti-2 { top: -15px; right: -15px; transform: rotate(20deg); }
+  .confetti-3 { bottom: 5px; left: -25px; transform: rotate(10deg); }
+  .confetti-4 { bottom: 0; right: -20px; transform: rotate(-25deg); }
+
+  .headline {
+    font-family: 'Caveat', cursive;
+    font-size: 42px;
+    color: #f5a623;
+    margin: 0 0 5px;
+    line-height: 1.1;
+  }
+
+  .subheadline {
+    font-size: 15px;
+    color: #a8b2d1;
+    margin: 0;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .body-section {
+    padding: 30px 40px;
+    text-align: center;
+  }
+
+  .main-text {
+    font-size: 17px;
+    color: #ccd6f6;
+    line-height: 1.7;
+    margin: 0 0 30px;
+  }
+
+  .main-text strong {
+    color: #fff;
+  }
+
+  .details-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 28px 30px;
+    margin: 0 auto 30px;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+  }
+
+  .detail-row {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 18px;
+    text-align: left;
+  }
+
+  .detail-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .detail-icon {
+    font-size: 22px;
+    margin-right: 14px;
+    min-width: 30px;
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .detail-label {
+    font-size: 11px;
+    color: #8892b0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0;
+  }
+
+  .detail-value {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 600;
+    margin: 2px 0 0;
+  }
+
+  .detail-note {
+    font-size: 13px;
+    color: #a8b2d1;
+    margin: 2px 0 0;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(233, 69, 96, 0.4), transparent);
+    margin: 25px 0;
+  }
+
+  .closing {
+    font-size: 16px;
+    color: #ccd6f6;
+    line-height: 1.6;
+    margin: 0 0 8px;
+  }
+
+  .signature {
+    font-family: 'Caveat', cursive;
+    font-size: 32px;
+    color: #f5a623;
+    margin: 10px 0 0;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 20px 30px 35px;
+  }
+
+  .footer-text {
+    font-size: 13px;
+    color: #5a6580;
+    margin: 0;
+    font-style: italic;
+  }
+
+  @media only screen and (max-width: 480px) {
+    .body-section { padding: 20px 24px; }
+    .headline { font-size: 34px; }
+    .age-badge { width: 100px; height: 100px; line-height: 100px; }
+    .age-badge span { font-size: 46px; }
+    .details-card { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="email-wrapper">
+
+  <div class="header">
+    <div class="age-badge" style="position: relative; display: inline-block;">
+      <span class="confetti confetti-1">&#127881;</span>
+      <span class="confetti confetti-2">&#10024;</span>
+      <span class="confetti confetti-3">&#127882;</span>
+      <span class="confetti confetti-4">&#127879;</span>
+      <span>50</span>
+    </div>
+    <h1 class="headline">Oh, it's happening.</h1>
+    <p class="subheadline">Jason is turning the big 5-0</p>
+  </div>
+
+  <div class="body-section">
+    <p class="main-text">
+      Look, I can't stop time<br>
+      and I'm not gonna pretend I tried.<br><br>
+      So... instead! I'm throwing myself a party!<br>
+      Aaaaand you're <s>(selected)</s> I mean, <strong>invited</strong>.<br><br>
+      Come hang out, eat some amazing food, and tell me I don't look a day over 39 ;)<br>
+      (Lying is encouraged.)
+    </p>
+
+    <div class="details-card">
+      <div class="detail-row">
+        <div class="detail-icon">&#128197;</div>
+        <div>
+          <p class="detail-label">When</p>
+          <p class="detail-value">Saturday, May 2nd, 2026</p>
+          <p class="detail-note">3:00 PM &ndash; 7:00 PM-ish</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#128205;</div>
+        <div>
+          <p class="detail-label">Where</p>
+          <p class="detail-value">2900 Irving Ave. S.</p>
+          <p class="detail-note">Park anywhere, you're good.<br>Hit 408 on the door fob and I'll buzz you in.</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#128104;&#8205;&#127859;</div>
+        <div>
+          <p class="detail-label">Food</p>
+          <p class="detail-value">Chef Sara's running the kitchen</p>
+          <p class="detail-note">Yes, my girlfriend is an actual chef. You're welcome.<br>Grill's hot too&mdash;Joel, if you wanna be a hero, now's your chance.</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#127918;</div>
+        <div>
+          <p class="detail-label">Entertainment</p>
+          <p class="detail-value">Nintendo on the big screen</p>
+          <p class="detail-note">Retro games on the TV, DJ Jason on the speakers,<br>and a few more surprises I'm keeping to myself.</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#127866;</div>
+        <div>
+          <p class="detail-label">Drinks</p>
+          <p class="detail-value">Fridge is stocked. It's on me.</p>
+        </div>
+      </div>
+      <div class="detail-row">
+        <div class="detail-icon">&#9989;</div>
+        <div>
+          <p class="detail-label">RSVP</p>
+          <p class="detail-value">No need&mdash;just show up</p>
+          <p class="detail-note">Seriously, just come</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="closing">
+      Half a century down. Let's make some noise about it.
+    </p>
+    <p class="signature">&mdash; Jason</p>
+  </div>
+
+  <div class="footer">
+    <p class="footer-text">May 1st is the actual birthday. May 2nd is the party. Don't get confused.</p>
+  </div>
+
+</div>
+</body>
+</html>
