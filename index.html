@@ -318,6 +318,26 @@
     transition: width 0.3s linear;
   }
 
+  .vote-link {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 8px 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #f5a623;
+    text-decoration: none;
+    border: 1px solid rgba(245, 166, 35, 0.4);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+  }
+
+  .vote-link:hover {
+    background: rgba(245, 166, 35, 0.15);
+    border-color: #f5a623;
+  }
+
   .footer {
     text-align: center;
     padding: 20px 30px 35px;
@@ -364,6 +384,7 @@
     </div>
     <h1 class="headline">Oh, it's happening.</h1>
     <p class="subheadline">I'm turning the big 5-0</p>
+    <a href="#poll" class="vote-link">&#127911; Vote for the mix</a>
   </div>
 
   <div class="body-section">
@@ -436,7 +457,7 @@
   </div>
 
   <!-- POLL SECTION -->
-  <div class="poll-section">
+  <div class="poll-section" id="poll">
     <p class="poll-title">Vote for the party playlist</p>
     <p class="poll-subtitle">Preview a clip, pick your favorite. DJ Funk takes requests... sometimes.</p>
 
