@@ -418,6 +418,8 @@
     padding: 8px 20px;
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
+    background: none;
+    cursor: pointer;
     letter-spacing: 1.5px;
     text-transform: uppercase;
     color: #f5a623;
@@ -537,7 +539,7 @@
         </div>
       </div>
       <div style="text-align:center;padding-top:20px;">
-        <a href="#poll" class="vote-link" onclick="event.preventDefault();document.getElementById('poll').scrollIntoView({behavior:'smooth'})">&#127911; Vote for the mix</a>
+        <button class="vote-link" onclick="document.getElementById('poll').scrollIntoView({behavior:'smooth'})">&#127911; Vote for the mix</button>
         <div class="chart-section" id="chartSection">
           <canvas id="pieChart" class="pie-canvas" width="140" height="140"></canvas>
         </div>
