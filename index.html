@@ -675,23 +675,8 @@
 
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
 (function() {
-  // Firebase config
-  firebase.initializeApp({
-    apiKey: "AIzaSyCaLPZgCpDVDGLIje26q9i7fyrPWF6tySs",
-    authDomain: "jason50th.firebaseapp.com",
-    databaseURL: "https://jason50th-default-rtdb.firebaseio.com",
-    projectId: "jason50th",
-    storageBucket: "jason50th.firebasestorage.app",
-    messagingSenderId: "567530070500",
-    appId: "1:567530070500:web:6c8949c813e703d3bf27f1"
-  });
-  var db = firebase.database();
-  var votesRef = db.ref('votes');
-
   var player = document.getElementById('previewPlayer');
   var volumeSlider = document.getElementById('volumeSlider');
   var volumePctEl = document.getElementById('volumePct');
@@ -705,10 +690,8 @@
   var votes = {};
   var selectedVotes = {};
 
-  // Set initial volume
   player.volume = 0.2;
 
-  // Volume slider
   volumeSlider.addEventListener('input', function() {
     var val = parseInt(this.value);
     var v = val / 100;
@@ -718,7 +701,6 @@
     muteBtn.textContent = v === 0 ? '\uD83D\uDD08' : '\uD83D\uDD0A';
   });
 
-  // Mute toggle
   muteBtn.addEventListener('click', function() {
     if (player.volume > 0) {
       lastVolume = player.volume;
@@ -734,26 +716,15 @@
     }
   });
 
-  // Track ended
   player.addEventListener('ended', function() {
     stopPreview();
   });
 
-  // Initialize local vote structure
+  // Initialize with random vote counts for the pie chart
   var mixItems = document.querySelectorAll('.mix-item');
   mixItems.forEach(function(item) {
     var id = item.dataset.id;
-    votes[id] = { count: 0 };
-  });
-
-  // Listen for real-time vote updates from Firebase
-  votesRef.on('value', function(snapshot) {
-    var data = snapshot.val() || {};
-    // Update local vote counts from Firebase
-    Object.keys(votes).forEach(function(id) {
-      votes[id].count = data[id] || 0;
-    });
-    drawPieChart();
+    votes[id] = { count: Math.floor(Math.random() * 10) + 1 };
   });
 
   // Wire up play buttons
@@ -773,7 +744,7 @@
     });
   });
 
-  // Wire up row clicks to play/pause (excluding play and vote button clicks)
+  // Wire up row clicks to play/pause
   document.querySelectorAll('.mix-item').forEach(function(item) {
     item.addEventListener('click', function() {
       var playBtn = item.querySelector('.mix-play');
@@ -842,23 +813,18 @@
   function doVote(btn, mixId) {
     var item = btn.closest('.mix-item');
 
-    // If already voted for this, unvote
     if (selectedVotes[mixId]) {
       delete selectedVotes[mixId];
+      votes[mixId].count--;
       btn.classList.remove('voted');
       btn.textContent = 'Vote';
       item.classList.remove('voted');
-      // Decrement in Firebase
-      votesRef.child(mixId).transaction(function(current) {
-        return (current || 1) - 1;
-      });
+      drawPieChart();
       return;
     }
 
-    // Count current votes
     var voteCount = Object.keys(selectedVotes).length;
 
-    // If at max votes, don't allow more
     if (voteCount >= MAX_VOTES) {
       btn.style.borderColor = '#e94560';
       btn.textContent = 'Max 2!';
@@ -869,17 +835,14 @@
       return;
     }
 
-    // Cast vote — increment in Firebase
     selectedVotes[mixId] = true;
+    votes[mixId].count++;
     btn.classList.add('voted');
     btn.textContent = 'Voted!';
     item.classList.add('voted');
-    votesRef.child(mixId).transaction(function(current) {
-      return (current || 0) + 1;
-    });
+    drawPieChart();
   }
 
-  // Draw initial placeholder
   drawPieChart();
 
   function drawPieChart() {
