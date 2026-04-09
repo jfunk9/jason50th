@@ -317,12 +317,13 @@
 
   .progress-bar {
     width: 100%;
-    height: 3px;
+    height: 10px;
     background: rgba(255, 255, 255, 0.08);
-    border-radius: 2px;
+    border-radius: 5px;
     margin-top: 4px;
     overflow: hidden;
     display: none;
+    cursor: pointer;
   }
 
   .progress-bar.active {
@@ -1026,6 +1027,61 @@
 
   document.addEventListener('touchend', function() {
     scrubbing = false;
+    mixScrubbing = false;
+  });
+
+  // Scrub support for mix list progress bars
+  var mixScrubbing = false;
+  var mixScrubBar = null;
+
+  function mixScrubTo(e) {
+    if (!currentBtn || !player.duration || !mixScrubBar) return;
+    var rect = mixScrubBar.getBoundingClientRect();
+    var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    player.currentTime = pct * player.duration;
+    var fill = mixScrubBar.querySelector('.progress-fill');
+    fill.style.width = (pct * 100) + '%';
+    npFill.style.width = (pct * 100) + '%';
+    npTime.textContent = formatTime(player.currentTime);
+  }
+
+  document.querySelectorAll('.progress-bar').forEach(function(bar) {
+    bar.addEventListener('mousedown', function(e) {
+      if (!currentBtn) return;
+      // Only scrub the active track's bar
+      var item = bar.closest('.mix-item');
+      var playBtn = item.querySelector('.mix-play');
+      if (playBtn !== currentBtn) return;
+      e.stopPropagation();
+      mixScrubbing = true;
+      mixScrubBar = bar;
+      mixScrubTo(e);
+    });
+
+    bar.addEventListener('touchstart', function(e) {
+      if (!currentBtn) return;
+      var item = bar.closest('.mix-item');
+      var playBtn = item.querySelector('.mix-play');
+      if (playBtn !== currentBtn) return;
+      e.stopPropagation();
+      e.preventDefault();
+      mixScrubbing = true;
+      mixScrubBar = bar;
+      mixScrubTo(e.touches[0]);
+    });
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (mixScrubbing) mixScrubTo(e);
+  });
+
+  document.addEventListener('mouseup', function() {
+    mixScrubbing = false;
+    mixScrubBar = null;
+  });
+
+  document.addEventListener('touchmove', function(e) {
+    if (mixScrubbing) mixScrubTo(e.touches[0]);
   });
 
   function doVote(btn, mixId) {
