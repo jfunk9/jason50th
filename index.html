@@ -323,7 +323,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin: 20px auto 0;
+    margin: 20px auto 25px;
     max-width: 200px;
   }
 
@@ -590,101 +590,101 @@
     <audio id="previewPlayer" preload="none"></audio>
 
     <div class="volume-control">
-      <span class="volume-icon" id="muteToggle" onclick="toggleMute()">&#128266;</span>
-      <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="20" oninput="setVolume(this.value)">
+      <span class="volume-icon" id="muteToggle">&#128266;</span>
+      <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="20">
       <span class="volume-pct" id="volumePct">20%</span>
     </div>
 
     <ul class="mix-list" id="mixList">
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/00A%20Halloween%2099%20Super%20Dub%20ft.%20Funk.mp3" data-id="halloween-99">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Halloween 99 Super Dub ft. Funk</p>
           <p class="mix-year">1999 &middot; Mix Tape Series</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'halloween-99')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/01B%2020th%20Historical%20Evidence%201999.mp3" data-id="historical-evidence">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Historical Evidence</p>
           <p class="mix-year">1999 &middot; Mix Tape Series</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'historical-evidence')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/03B%20Daytona%20500.mp3" data-id="daytona-500">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Daytona 500</p>
           <p class="mix-year">2000 &middot; Mix Tape Series</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'daytona-500')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/05B%20Funk%20In%202000%20%28DJ%20Shadow%20Mix%29.mp3" data-id="shadow-mix">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Funk In 2000 (DJ Shadow Mix)</p>
           <p class="mix-year">2000 &middot; Mix Tape Series</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'shadow-mix')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/04A%20The%20Silencer.mp3" data-id="silencer">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">The Silencer</p>
           <p class="mix-year">2000 &middot; Mix Tape Series</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'silencer')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202002.mp3" data-id="em-2002">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Essential Mix</p>
           <p class="mix-year">2002</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'em-2002')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202003.mp3" data-id="em-2003">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Essential Mix</p>
           <p class="mix-year">2003</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'em-2003')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202022%20-%20The%207th%20Floor%202d.mp3" data-id="7th-floor">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">The 7th Floor 2d</p>
           <p class="mix-year">2022</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, '7th-floor')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202023%20-%20Deep%20Freezethon%204a.mp3" data-id="freezethon">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Deep Freezethon 4a</p>
           <p class="mix-year">2023</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'freezethon')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202024%20-%20TheCovid_1j%20(24%20Mix).mp3" data-id="covid-1j">
-        <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
+        <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">TheCovid 1j</p>
           <p class="mix-year">2024</p>
           <div class="progress-bar"><div class="progress-fill"></div></div>
         </div>
-        <button class="mix-vote-btn" onclick="vote(this, 'covid-1j')">Vote</button>
+        <button class="mix-vote-btn">Vote</button>
       </li>
     </ul>
 
@@ -701,51 +701,82 @@
 </div>
 
 <script>
-  const player = document.getElementById('previewPlayer');
-  const volumeSlider = document.getElementById('volumeSlider');
-  const volumePct = document.getElementById('volumePct');
-  const muteToggle = document.getElementById('muteToggle');
-  let currentBtn = null;
-  let currentBar = null;
-  let currentFill = null;
-  let progressInterval = null;
-  let lastVolume = 0.2;
+(function() {
+  var player = document.getElementById('previewPlayer');
+  var volumeSlider = document.getElementById('volumeSlider');
+  var volumePctEl = document.getElementById('volumePct');
+  var muteBtn = document.getElementById('muteToggle');
+  var currentBtn = null;
+  var currentBar = null;
+  var currentFill = null;
+  var progressInterval = null;
+  var lastVolume = 0.2;
+  var MAX_VOTES = 2;
+  var votes = {};
+  var selectedVotes = {};
 
+  // Set initial volume
   player.volume = 0.2;
 
-  function setVolume(val) {
-    const v = val / 100;
+  // Volume slider
+  volumeSlider.addEventListener('input', function() {
+    var val = parseInt(this.value);
+    var v = val / 100;
     player.volume = v;
-    lastVolume = v;
-    volumePct.textContent = val + '%';
-    muteToggle.innerHTML = v === 0 ? '&#128264;' : '&#128266;';
-  }
+    lastVolume = v > 0 ? v : lastVolume;
+    volumePctEl.textContent = val + '%';
+    muteBtn.textContent = v === 0 ? '\uD83D\uDD08' : '\uD83D\uDD0A';
+  });
 
-  function toggleMute() {
+  // Mute toggle
+  muteBtn.addEventListener('click', function() {
     if (player.volume > 0) {
       lastVolume = player.volume;
       player.volume = 0;
       volumeSlider.value = 0;
-      volumePct.textContent = '0%';
-      muteToggle.innerHTML = '&#128264;';
+      volumePctEl.textContent = '0%';
+      muteBtn.textContent = '\uD83D\uDD08';
     } else {
       player.volume = lastVolume || 0.2;
       volumeSlider.value = Math.round(player.volume * 100);
-      volumePct.textContent = Math.round(player.volume * 100) + '%';
-      muteToggle.innerHTML = '&#128266;';
+      volumePctEl.textContent = Math.round(player.volume * 100) + '%';
+      muteBtn.textContent = '\uD83D\uDD0A';
     }
-  }
+  });
 
-  // When track ends naturally, reset the button
-  player.addEventListener('ended', () => {
+  // Track ended
+  player.addEventListener('ended', function() {
     stopPreview();
   });
 
+  // Initialize vote counts
+  var mixItems = document.querySelectorAll('.mix-item');
+  mixItems.forEach(function(item) {
+    var id = item.dataset.id;
+    var name = item.querySelector('.mix-name').textContent;
+    votes[id] = { name: name, count: 0 };
+  });
+
+  // Wire up play buttons
+  document.querySelectorAll('.mix-play').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      togglePreview(btn);
+    });
+  });
+
+  // Wire up vote buttons
+  document.querySelectorAll('.mix-vote-btn').forEach(function(btn) {
+    var mixId = btn.closest('.mix-item').dataset.id;
+    btn.addEventListener('click', function() {
+      doVote(btn, mixId);
+    });
+  });
+
   function togglePreview(btn) {
-    const item = btn.closest('.mix-item');
-    const src = item.dataset.src;
-    const bar = item.querySelector('.progress-bar');
-    const fill = item.querySelector('.progress-fill');
+    var item = btn.closest('.mix-item');
+    var src = item.dataset.src;
+    var bar = item.querySelector('.progress-bar');
+    var fill = item.querySelector('.progress-fill');
 
     // If same track is playing, pause it
     if (currentBtn === btn && !player.paused) {
@@ -757,11 +788,11 @@
     }
 
     // If same track is paused, resume it
-    if (currentBtn === btn && player.paused && player.src) {
+    if (currentBtn === btn && player.paused && player.currentTime > 0) {
       player.play();
       btn.innerHTML = '&#9646;&#9646;';
       btn.classList.add('playing');
-      progressInterval = setInterval(() => updateProgress(fill), 200);
+      progressInterval = setInterval(function() { updateProgress(fill); }, 200);
       return;
     }
 
@@ -779,13 +810,12 @@
     btn.classList.add('playing');
     bar.classList.add('active');
 
-    // Update progress based on actual duration
-    progressInterval = setInterval(() => updateProgress(fill), 200);
+    progressInterval = setInterval(function() { updateProgress(fill); }, 200);
   }
 
   function updateProgress(fill) {
     if (player.duration && isFinite(player.duration)) {
-      const pct = (player.currentTime / player.duration) * 100;
+      var pct = (player.currentTime / player.duration) * 100;
       fill.style.width = pct + '%';
     }
   }
@@ -797,7 +827,7 @@
       currentBtn.innerHTML = '&#9654;';
       currentBtn.classList.remove('playing');
     }
-    document.querySelectorAll('.progress-bar').forEach(b => {
+    document.querySelectorAll('.progress-bar').forEach(function(b) {
       b.classList.remove('active');
       b.querySelector('.progress-fill').style.width = '0%';
     });
@@ -805,23 +835,12 @@
     currentBtn = null;
   }
 
-  const MAX_VOTES = 2;
-  const votes = {};
-  const selectedVotes = new Set();
-
-  // Initialize vote counts
-  document.querySelectorAll('.mix-item').forEach(item => {
-    const id = item.dataset.id;
-    const name = item.querySelector('.mix-name').textContent;
-    votes[id] = { name: name, count: 0 };
-  });
-
-  function vote(btn, mixId) {
-    const item = btn.closest('.mix-item');
+  function doVote(btn, mixId) {
+    var item = btn.closest('.mix-item');
 
     // If already voted for this, unvote
-    if (selectedVotes.has(mixId)) {
-      selectedVotes.delete(mixId);
+    if (selectedVotes[mixId]) {
+      delete selectedVotes[mixId];
       votes[mixId].count--;
       btn.classList.remove('voted');
       btn.textContent = 'Vote';
@@ -830,12 +849,14 @@
       return;
     }
 
+    // Count current votes
+    var voteCount = Object.keys(selectedVotes).length;
+
     // If at max votes, don't allow more
-    if (selectedVotes.size >= MAX_VOTES) {
-      // Flash the button to indicate limit
+    if (voteCount >= MAX_VOTES) {
       btn.style.borderColor = '#e94560';
       btn.textContent = 'Max 2!';
-      setTimeout(() => {
+      setTimeout(function() {
         btn.style.borderColor = '';
         btn.textContent = 'Vote';
       }, 1000);
@@ -843,7 +864,7 @@
     }
 
     // Cast vote
-    selectedVotes.add(mixId);
+    selectedVotes[mixId] = true;
     votes[mixId].count++;
     btn.classList.add('voted');
     btn.textContent = 'Voted!';
@@ -852,13 +873,12 @@
   }
 
   function updateRanking() {
-    const ranking = document.getElementById('ranking');
-    const rankList = document.getElementById('rankList');
+    var ranking = document.getElementById('ranking');
+    var rankList = document.getElementById('rankList');
 
-    // Sort by votes descending
-    const sorted = Object.entries(votes)
-      .filter(([id, data]) => data.count > 0)
-      .sort((a, b) => b[1].count - a[1].count);
+    var sorted = Object.keys(votes)
+      .filter(function(id) { return votes[id].count > 0; })
+      .sort(function(a, b) { return votes[b].count - votes[a].count; });
 
     if (sorted.length === 0) {
       ranking.classList.remove('visible');
@@ -866,18 +886,20 @@
     }
 
     ranking.classList.add('visible');
-    const maxVotes = sorted[0][1].count;
 
-    rankList.innerHTML = sorted.map(([id, data], i) => {
-      const barWidth = maxVotes > 0 ? (data.count / MAX_VOTES) * 100 : 0;
-      return `
-        <div class="rank-item">
-          <span class="rank-num">${i + 1}.</span>
-          <span class="rank-name">${data.name}</span>
-          <div class="rank-bar-bg"><div class="rank-bar" style="width: ${barWidth}%"></div></div>
-        </div>`;
-    }).join('');
+    var html = '';
+    sorted.forEach(function(id, i) {
+      var data = votes[id];
+      var barWidth = (data.count / MAX_VOTES) * 100;
+      html += '<div class="rank-item">' +
+        '<span class="rank-num">' + (i + 1) + '.</span>' +
+        '<span class="rank-name">' + data.name + '</span>' +
+        '<div class="rank-bar-bg"><div class="rank-bar" style="width:' + barWidth + '%"></div></div>' +
+        '</div>';
+    });
+    rankList.innerHTML = html;
   }
+})();
 </script>
 </body>
 </html>
