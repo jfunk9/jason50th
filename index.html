@@ -1028,14 +1028,8 @@
 
     if (found) {
       var mixItem = document.querySelector('.mix-item[data-id="' + found.id + '"]');
-      mixItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      // Brief delay so scroll finishes, then start playing
-      setTimeout(function() {
-        var playBtn = mixItem.querySelector('.mix-play');
-        if (!playBtn.classList.contains('playing')) {
-          togglePreview(playBtn);
-        }
-      }, 400);
+      var playBtn = mixItem.querySelector('.mix-play');
+      togglePreview(playBtn);
     }
   });
 })();
