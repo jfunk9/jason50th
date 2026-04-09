@@ -675,8 +675,23 @@
 
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 <script>
 (function() {
+  // Firebase config
+  firebase.initializeApp({
+    apiKey: "AIzaSyCaLPZgCpDVDGLIje26q9i7fyrPWF6tySs",
+    authDomain: "jason50th.firebaseapp.com",
+    databaseURL: "https://jason50th-default-rtdb.firebaseio.com",
+    projectId: "jason50th",
+    storageBucket: "jason50th.firebasestorage.app",
+    messagingSenderId: "567530070500",
+    appId: "1:567530070500:web:6c8949c813e703d3bf27f1"
+  });
+  var db = firebase.database();
+  var votesRef = db.ref('votes');
+
   var player = document.getElementById('previewPlayer');
   var volumeSlider = document.getElementById('volumeSlider');
   var volumePctEl = document.getElementById('volumePct');
@@ -724,12 +739,21 @@
     stopPreview();
   });
 
-  // Initialize vote counts with random values for the pie chart
+  // Initialize local vote structure
   var mixItems = document.querySelectorAll('.mix-item');
   mixItems.forEach(function(item) {
     var id = item.dataset.id;
-    var name = item.querySelector('.mix-name').textContent;
-    votes[id] = { name: name, count: Math.floor(Math.random() * 10) + 1 };
+    votes[id] = { count: 0 };
+  });
+
+  // Listen for real-time vote updates from Firebase
+  votesRef.on('value', function(snapshot) {
+    var data = snapshot.val() || {};
+    // Update local vote counts from Firebase
+    Object.keys(votes).forEach(function(id) {
+      votes[id].count = data[id] || 0;
+    });
+    drawPieChart();
   });
 
   // Wire up play buttons
@@ -763,7 +787,6 @@
     var bar = item.querySelector('.progress-bar');
     var fill = item.querySelector('.progress-fill');
 
-    // If same track is playing, pause it
     if (currentBtn === btn && !player.paused) {
       player.pause();
       btn.innerHTML = '&#9654;';
@@ -772,7 +795,6 @@
       return;
     }
 
-    // If same track is paused, resume it
     if (currentBtn === btn && player.paused && player.currentTime > 0) {
       player.play();
       btn.innerHTML = '&#9646;&#9646;';
@@ -781,10 +803,8 @@
       return;
     }
 
-    // Stop any current track
     stopPreview();
 
-    // Start new track
     player.src = src;
     player.currentTime = 0;
     player.play();
@@ -794,7 +814,6 @@
     btn.innerHTML = '&#9646;&#9646;';
     btn.classList.add('playing');
     bar.classList.add('active');
-
     progressInterval = setInterval(function() { updateProgress(fill); }, 200);
   }
 
@@ -826,11 +845,13 @@
     // If already voted for this, unvote
     if (selectedVotes[mixId]) {
       delete selectedVotes[mixId];
-      votes[mixId].count--;
       btn.classList.remove('voted');
       btn.textContent = 'Vote';
       item.classList.remove('voted');
-      drawPieChart();
+      // Decrement in Firebase
+      votesRef.child(mixId).transaction(function(current) {
+        return (current || 1) - 1;
+      });
       return;
     }
 
@@ -848,13 +869,14 @@
       return;
     }
 
-    // Cast vote
+    // Cast vote — increment in Firebase
     selectedVotes[mixId] = true;
-    votes[mixId].count++;
     btn.classList.add('voted');
     btn.textContent = 'Voted!';
     item.classList.add('voted');
-    drawPieChart();
+    votesRef.child(mixId).transaction(function(current) {
+      return (current || 0) + 1;
+    });
   }
 
   // Draw initial placeholder
@@ -866,14 +888,12 @@
 
     var voted = Object.keys(votes).filter(function(id) { return votes[id].count > 0; });
 
-    // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     var cx = canvas.width / 2;
     var cy = canvas.height / 2;
     var radius = 60;
 
-    // No votes yet — draw placeholder
     if (voted.length === 0) {
       ctx.beginPath();
       ctx.arc(cx, cy, radius, 0, Math.PI * 2);
@@ -908,7 +928,6 @@
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      // Draw number in the middle of the slice
       var midAngle = startAngle + sliceAngle / 2;
       var labelR = radius * 0.6;
       var lx = cx + Math.cos(midAngle) * labelR;
