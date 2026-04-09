@@ -204,9 +204,9 @@
   .mix-item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
-    margin-bottom: 8px;
+    gap: 10px;
+    padding: 8px 14px;
+    margin-bottom: 5px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 10px;
@@ -224,9 +224,23 @@
     background: rgba(245, 166, 35, 0.1);
   }
 
+  .mix-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+  }
+
+  .mix-item.voted .mix-dot {
+    opacity: 1;
+    box-shadow: 0 0 6px currentColor;
+  }
+
   .mix-play {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.1);
     border: none;
@@ -255,7 +269,7 @@
   }
 
   .mix-name {
-    font-size: 15px;
+    font-size: 13px;
     color: #fff;
     font-weight: 600;
     margin: 0;
@@ -265,16 +279,16 @@
   }
 
   .mix-year {
-    font-size: 12px;
+    font-size: 11px;
     color: #8892b0;
-    margin: 2px 0 0;
+    margin: 1px 0 0;
   }
 
   .mix-vote-btn {
     background: none;
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
-    padding: 6px 14px;
+    padding: 4px 12px;
     color: #8892b0;
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
@@ -372,76 +386,29 @@
     text-align: right;
   }
 
-  /* RANKING SECTION */
-  .ranking-section {
+  /* PIE CHART SECTION */
+  .chart-section {
     max-width: 520px;
     margin: 25px auto 10px;
-    text-align: left;
+    text-align: center;
     display: none;
   }
 
-  .ranking-section.visible {
+  .chart-section.visible {
     display: block;
   }
 
-  .ranking-title {
+  .chart-title {
     font-size: 13px;
     color: #8892b0;
     text-transform: uppercase;
     letter-spacing: 1.5px;
-    margin: 0 0 12px;
-    text-align: center;
+    margin: 0 0 15px;
   }
 
-  .rank-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 16px;
-    margin-bottom: 4px;
-    border-radius: 8px;
-    background: rgba(255, 255, 255, 0.03);
-  }
-
-  .rank-item:first-child {
-    background: rgba(245, 166, 35, 0.1);
-  }
-
-  .rank-num {
-    font-size: 18px;
-    font-weight: 700;
-    color: #f5a623;
-    min-width: 28px;
-  }
-
-  .rank-item:first-child .rank-num {
-    font-size: 22px;
-  }
-
-  .rank-name {
-    flex: 1;
-    font-size: 14px;
-    color: #ccd6f6;
-  }
-
-  .rank-votes {
-    font-size: 13px;
-    color: #8892b0;
-  }
-
-  .rank-bar-bg {
-    width: 80px;
-    height: 6px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .rank-bar {
-    height: 100%;
-    background: linear-gradient(90deg, #e94560, #f5a623);
-    border-radius: 3px;
-    transition: width 0.5s ease;
+  .pie-canvas {
+    display: block;
+    margin: 0 auto;
   }
 
   .vote-link {
@@ -596,7 +563,8 @@
     </div>
 
     <ul class="mix-list" id="mixList">
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/00A%20Halloween%2099%20Super%20Dub%20ft.%20Funk.mp3" data-id="halloween-99">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/00A%20Halloween%2099%20Super%20Dub%20ft.%20Funk.mp3" data-id="halloween-99" data-color="#e94560">
+        <span class="mix-dot" style="background:#e94560;color:#e94560"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Halloween 99 Super Dub ft. Funk</p>
@@ -605,7 +573,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/01B%2020th%20Historical%20Evidence%201999.mp3" data-id="historical-evidence">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/01B%2020th%20Historical%20Evidence%201999.mp3" data-id="historical-evidence" data-color="#f5a623">
+        <span class="mix-dot" style="background:#f5a623;color:#f5a623"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Historical Evidence</p>
@@ -614,7 +583,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/03B%20Daytona%20500.mp3" data-id="daytona-500">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/03B%20Daytona%20500.mp3" data-id="daytona-500" data-color="#3b82f6">
+        <span class="mix-dot" style="background:#3b82f6;color:#3b82f6"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Daytona 500</p>
@@ -623,7 +593,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/05B%20Funk%20In%202000%20%28DJ%20Shadow%20Mix%29.mp3" data-id="shadow-mix">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/05B%20Funk%20In%202000%20%28DJ%20Shadow%20Mix%29.mp3" data-id="shadow-mix" data-color="#8b5cf6">
+        <span class="mix-dot" style="background:#8b5cf6;color:#8b5cf6"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Funk In 2000 (DJ Shadow Mix)</p>
@@ -632,7 +603,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/04A%20The%20Silencer.mp3" data-id="silencer">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/04A%20The%20Silencer.mp3" data-id="silencer" data-color="#10b981">
+        <span class="mix-dot" style="background:#10b981;color:#10b981"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">The Silencer</p>
@@ -641,7 +613,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202002.mp3" data-id="em-2002">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202002.mp3" data-id="em-2002" data-color="#ec4899">
+        <span class="mix-dot" style="background:#ec4899;color:#ec4899"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Essential Mix</p>
@@ -650,7 +623,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202003.mp3" data-id="em-2003">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202003.mp3" data-id="em-2003" data-color="#06b6d4">
+        <span class="mix-dot" style="background:#06b6d4;color:#06b6d4"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Essential Mix</p>
@@ -659,7 +633,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202022%20-%20The%207th%20Floor%202d.mp3" data-id="7th-floor">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202022%20-%20The%207th%20Floor%202d.mp3" data-id="7th-floor" data-color="#f97316">
+        <span class="mix-dot" style="background:#f97316;color:#f97316"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">The 7th Floor 2d</p>
@@ -668,7 +643,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202023%20-%20Deep%20Freezethon%204a.mp3" data-id="freezethon">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202023%20-%20Deep%20Freezethon%204a.mp3" data-id="freezethon" data-color="#a855f7">
+        <span class="mix-dot" style="background:#a855f7;color:#a855f7"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Deep Freezethon 4a</p>
@@ -677,7 +653,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202024%20-%20TheCovid_1j%20(24%20Mix).mp3" data-id="covid-1j">
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202024%20-%20TheCovid_1j%20(24%20Mix).mp3" data-id="covid-1j" data-color="#eab308">
+        <span class="mix-dot" style="background:#eab308;color:#eab308"></span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">TheCovid 1j</p>
@@ -688,9 +665,9 @@
       </li>
     </ul>
 
-    <div class="ranking-section" id="ranking">
-      <p class="ranking-title">Current Rankings</p>
-      <div id="rankList"></div>
+    <div class="chart-section" id="chartSection">
+      <p class="chart-title">Your Picks</p>
+      <canvas id="pieChart" class="pie-canvas" width="140" height="140"></canvas>
     </div>
   </div>
 
@@ -873,31 +850,47 @@
   }
 
   function updateRanking() {
-    var ranking = document.getElementById('ranking');
-    var rankList = document.getElementById('rankList');
+    var section = document.getElementById('chartSection');
+    var canvas = document.getElementById('pieChart');
+    var ctx = canvas.getContext('2d');
 
-    var sorted = Object.keys(votes)
-      .filter(function(id) { return votes[id].count > 0; })
-      .sort(function(a, b) { return votes[b].count - votes[a].count; });
+    var voted = Object.keys(votes).filter(function(id) { return votes[id].count > 0; });
 
-    if (sorted.length === 0) {
-      ranking.classList.remove('visible');
+    if (voted.length === 0) {
+      section.classList.remove('visible');
       return;
     }
 
-    ranking.classList.add('visible');
+    section.classList.add('visible');
 
-    var html = '';
-    sorted.forEach(function(id, i) {
-      var data = votes[id];
-      var barWidth = (data.count / MAX_VOTES) * 100;
-      html += '<div class="rank-item">' +
-        '<span class="rank-num">' + (i + 1) + '.</span>' +
-        '<span class="rank-name">' + data.name + '</span>' +
-        '<div class="rank-bar-bg"><div class="rank-bar" style="width:' + barWidth + '%"></div></div>' +
-        '</div>';
+    // Clear canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    var total = voted.reduce(function(sum, id) { return sum + votes[id].count; }, 0);
+    var cx = canvas.width / 2;
+    var cy = canvas.height / 2;
+    var radius = 60;
+    var startAngle = -Math.PI / 2;
+
+    voted.forEach(function(id) {
+      var item = document.querySelector('.mix-item[data-id="' + id + '"]');
+      var color = item.dataset.color;
+      var sliceAngle = (votes[id].count / total) * 2 * Math.PI;
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, startAngle, startAngle + sliceAngle);
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+
+      // Subtle gap between slices
+      ctx.strokeStyle = '#16213e';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      startAngle += sliceAngle;
     });
-    rankList.innerHTML = html;
   }
 })();
 </script>
