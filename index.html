@@ -725,12 +725,12 @@
     stopPreview();
   });
 
-  // Initialize vote counts
+  // Initialize vote counts with random values for the pie chart
   var mixItems = document.querySelectorAll('.mix-item');
   mixItems.forEach(function(item) {
     var id = item.dataset.id;
     var name = item.querySelector('.mix-name').textContent;
-    votes[id] = { name: name, count: 0 };
+    votes[id] = { name: name, count: Math.floor(Math.random() * 10) + 1 };
   });
 
   // Wire up play buttons
