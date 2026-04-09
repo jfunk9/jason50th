@@ -561,7 +561,7 @@
       <div style="text-align:center;padding-top:20px;position:relative;">
         <button class="vote-link" onclick="document.getElementById('poll').scrollIntoView({behavior:'smooth'})">&#127911; Vote for the mix</button>
         <div class="chart-section" id="chartSection" style="position:relative;">
-          <canvas id="pieChart" class="pie-canvas" width="160" height="160"></canvas>
+          <canvas id="pieChart" class="pie-canvas" width="240" height="240"></canvas>
           <div class="pie-tooltip" id="pieTooltip"></div>
         </div>
       </div>
@@ -881,7 +881,7 @@
 
     var cx = canvas.width / 2;
     var cy = canvas.height / 2;
-    var radius = 68;
+    var radius = 105;
 
     if (voted.length === 0) {
       ctx.beginPath();
@@ -947,7 +947,7 @@
   var tooltip = document.getElementById('pieTooltip');
   var cx = pieCanvas.width / 2;
   var cy = pieCanvas.height / 2;
-  var radius = 68;
+  var radius = 105;
 
   pieCanvas.addEventListener('mousemove', function(e) {
     var rect = pieCanvas.getBoundingClientRect();
