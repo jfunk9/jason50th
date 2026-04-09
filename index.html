@@ -477,7 +477,7 @@
     </div>
     <h1 class="headline">Oh, it's happening.</h1>
     <p class="subheadline">I'm turning the big 5-0</p>
-    <a href="#poll" class="vote-link">&#127911; Vote for the mix</a>
+    <a href="#poll" class="vote-link" onclick="event.preventDefault();document.getElementById('poll').scrollIntoView({behavior:'smooth'})">&#127911; Vote for the mix</a>
   </div>
 
   <div class="body-section">
@@ -555,6 +555,11 @@
     <p class="poll-subtitle">Preview a clip, pick your favorite. DJ Funk takes requests... sometimes.</p>
 
     <audio id="previewPlayer" preload="none"></audio>
+
+    <div class="chart-section" id="chartSection">
+      <p class="chart-title">Your Picks</p>
+      <canvas id="pieChart" class="pie-canvas" width="140" height="140"></canvas>
+    </div>
 
     <div class="volume-control">
       <span class="volume-icon" id="muteToggle">&#128266;</span>
@@ -664,11 +669,6 @@
         <button class="mix-vote-btn">Vote</button>
       </li>
     </ul>
-
-    <div class="chart-section" id="chartSection">
-      <p class="chart-title">Your Picks</p>
-      <canvas id="pieChart" class="pie-canvas" width="140" height="140"></canvas>
-    </div>
   </div>
 
   <div class="footer">
