@@ -432,6 +432,88 @@
     opacity: 1;
   }
 
+  .now-playing {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 280px;
+    margin: 15px auto 0;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+  }
+
+  .now-playing.active {
+    opacity: 1;
+  }
+
+  .np-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ccd6f6;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+  }
+
+  .np-btn:hover {
+    background: rgba(233, 69, 96, 0.3);
+  }
+
+  .np-btn.playing {
+    background: linear-gradient(135deg, #e94560, #f5a623);
+    color: #fff;
+  }
+
+  .np-track {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .np-name {
+    font-size: 11px;
+    color: #a8b2d1;
+    margin: 0 0 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .np-bar {
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .np-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #e94560, #f5a623);
+    border-radius: 2px;
+    transition: width 0.2s linear;
+  }
+
+  .np-time {
+    font-size: 10px;
+    color: #8892b0;
+    min-width: 32px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
   .vote-link {
     display: inline-block;
     margin-top: 16px;
@@ -563,6 +645,16 @@
         <div class="chart-section" id="chartSection" style="position:relative;">
           <canvas id="pieChart" class="pie-canvas" width="240" height="240"></canvas>
           <div class="pie-tooltip" id="pieTooltip"></div>
+          <div class="now-playing" id="nowPlaying">
+            <button class="np-btn" id="npBtn">&#9654;</button>
+            <div class="np-track">
+              <p class="np-name" id="npName">Select a mix</p>
+              <div class="np-bar">
+                <div class="np-fill" id="npFill"></div>
+              </div>
+            </div>
+            <span class="np-time" id="npTime">0:00</span>
+          </div>
         </div>
       </div>
     </div>
@@ -712,7 +804,13 @@
   var MAX_VOTES = 2;
   var votes = {};
   var selectedVotes = {};
-  var sliceData = []; // store slice angles for hover detection
+  var sliceData = [];
+  var npBar = document.getElementById('nowPlaying');
+  var npBtn = document.getElementById('npBtn');
+  var npName = document.getElementById('npName');
+  var npFill = document.getElementById('npFill');
+  var npTime = document.getElementById('npTime');
+  var currentMixId = null;
 
   player.volume = 0.2;
 
@@ -777,16 +875,26 @@
     });
   });
 
+  function formatTime(s) {
+    var m = Math.floor(s / 60);
+    var sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
   function togglePreview(btn) {
     var item = btn.closest('.mix-item');
     var src = item.dataset.src;
     var bar = item.querySelector('.progress-bar');
     var fill = item.querySelector('.progress-fill');
+    var mixName = item.querySelector('.mix-name').textContent;
+    var mixNum = item.dataset.num;
 
     if (currentBtn === btn && !player.paused) {
       player.pause();
       btn.innerHTML = '&#9654;';
       btn.classList.remove('playing');
+      npBtn.innerHTML = '&#9654;';
+      npBtn.classList.remove('playing');
       clearInterval(progressInterval);
       return;
     }
@@ -795,6 +903,8 @@
       player.play();
       btn.innerHTML = '&#9646;&#9646;';
       btn.classList.add('playing');
+      npBtn.innerHTML = '&#9646;&#9646;';
+      npBtn.classList.add('playing');
       progressInterval = setInterval(function() { updateProgress(fill); }, 200);
       return;
     }
@@ -807,9 +917,19 @@
     currentBtn = btn;
     currentBar = bar;
     currentFill = fill;
+    currentMixId = item.dataset.id;
     btn.innerHTML = '&#9646;&#9646;';
     btn.classList.add('playing');
     bar.classList.add('active');
+
+    // Update now-playing bar
+    npBar.classList.add('active');
+    npBtn.innerHTML = '&#9646;&#9646;';
+    npBtn.classList.add('playing');
+    npName.textContent = mixNum + '. ' + mixName;
+    npFill.style.width = '0%';
+    npTime.textContent = '0:00';
+
     progressInterval = setInterval(function() { updateProgress(fill); }, 200);
   }
 
@@ -817,6 +937,8 @@
     if (player.duration && isFinite(player.duration)) {
       var pct = (player.currentTime / player.duration) * 100;
       fill.style.width = pct + '%';
+      npFill.style.width = pct + '%';
+      npTime.textContent = formatTime(player.currentTime);
     }
   }
 
@@ -833,7 +955,43 @@
     });
     clearInterval(progressInterval);
     currentBtn = null;
+    currentMixId = null;
+    npBar.classList.remove('active');
+    npBtn.innerHTML = '&#9654;';
+    npBtn.classList.remove('playing');
+    npName.textContent = 'Select a mix';
+    npFill.style.width = '0%';
+    npTime.textContent = '0:00';
   }
+
+  // Now-playing button: pause/resume
+  npBtn.addEventListener('click', function() {
+    if (!currentBtn) return;
+    if (!player.paused) {
+      player.pause();
+      currentBtn.innerHTML = '&#9654;';
+      currentBtn.classList.remove('playing');
+      npBtn.innerHTML = '&#9654;';
+      npBtn.classList.remove('playing');
+      clearInterval(progressInterval);
+    } else {
+      player.play();
+      currentBtn.innerHTML = '&#9646;&#9646;';
+      currentBtn.classList.add('playing');
+      npBtn.innerHTML = '&#9646;&#9646;';
+      npBtn.classList.add('playing');
+      var fill = currentFill;
+      progressInterval = setInterval(function() { updateProgress(fill); }, 200);
+    }
+  });
+
+  // Click progress bar to seek
+  document.querySelector('.np-bar').addEventListener('click', function(e) {
+    if (!currentBtn || !player.duration) return;
+    var rect = this.getBoundingClientRect();
+    var pct = (e.clientX - rect.left) / rect.width;
+    player.currentTime = pct * player.duration;
+  });
 
   function doVote(btn, mixId) {
     var item = btn.closest('.mix-item');
