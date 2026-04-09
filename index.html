@@ -734,7 +734,8 @@
 
   // Wire up play buttons
   document.querySelectorAll('.mix-play').forEach(function(btn) {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
       togglePreview(btn);
     });
   });
@@ -742,8 +743,17 @@
   // Wire up vote buttons
   document.querySelectorAll('.mix-vote-btn').forEach(function(btn) {
     var mixId = btn.closest('.mix-item').dataset.id;
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
       doVote(btn, mixId);
+    });
+  });
+
+  // Wire up row clicks to play/pause (excluding play and vote button clicks)
+  document.querySelectorAll('.mix-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var playBtn = item.querySelector('.mix-play');
+      togglePreview(playBtn);
     });
   });
 
