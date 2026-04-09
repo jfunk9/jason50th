@@ -491,9 +491,9 @@
 
   .np-bar {
     width: 100%;
-    height: 3px;
+    height: 6px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
+    border-radius: 3px;
     overflow: hidden;
     cursor: pointer;
   }
@@ -985,12 +985,47 @@
     }
   });
 
-  // Click progress bar to seek
-  document.querySelector('.np-bar').addEventListener('click', function(e) {
+  // Click and drag progress bar to scrub
+  var npBarEl = document.querySelector('.np-bar');
+  var scrubbing = false;
+
+  function scrubTo(e) {
     if (!currentBtn || !player.duration) return;
-    var rect = this.getBoundingClientRect();
-    var pct = (e.clientX - rect.left) / rect.width;
+    var rect = npBarEl.getBoundingClientRect();
+    var pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
     player.currentTime = pct * player.duration;
+    npFill.style.width = (pct * 100) + '%';
+    npTime.textContent = formatTime(player.currentTime);
+  }
+
+  npBarEl.addEventListener('mousedown', function(e) {
+    if (!currentBtn) return;
+    scrubbing = true;
+    scrubTo(e);
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (scrubbing) scrubTo(e);
+  });
+
+  document.addEventListener('mouseup', function() {
+    scrubbing = false;
+  });
+
+  // Touch support for mobile scrubbing
+  npBarEl.addEventListener('touchstart', function(e) {
+    if (!currentBtn) return;
+    scrubbing = true;
+    scrubTo(e.touches[0]);
+    e.preventDefault();
+  });
+
+  document.addEventListener('touchmove', function(e) {
+    if (scrubbing) scrubTo(e.touches[0]);
+  });
+
+  document.addEventListener('touchend', function() {
+    scrubbing = false;
   });
 
   function doVote(btn, mixId) {
