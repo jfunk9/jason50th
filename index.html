@@ -389,13 +389,8 @@
   /* PIE CHART SECTION */
   .chart-section {
     max-width: 520px;
-    margin: 25px auto 10px;
+    margin: 20px auto 5px;
     text-align: center;
-    display: none;
-  }
-
-  .chart-section.visible {
-    display: block;
   }
 
   .chart-title {
@@ -479,7 +474,6 @@
     <p class="subheadline">I'm turning the big 5-0</p>
     <a href="#poll" class="vote-link" onclick="event.preventDefault();document.getElementById('poll').scrollIntoView({behavior:'smooth'})">&#127911; Vote for the mix</a>
     <div class="chart-section" id="chartSection">
-      <p class="chart-title">Your Picks</p>
       <canvas id="pieChart" class="pie-canvas" width="140" height="140"></canvas>
     </div>
   </div>
@@ -821,7 +815,7 @@
       btn.classList.remove('voted');
       btn.textContent = 'Vote';
       item.classList.remove('voted');
-      updateRanking();
+      drawPieChart();
       return;
     }
 
@@ -845,30 +839,41 @@
     btn.classList.add('voted');
     btn.textContent = 'Voted!';
     item.classList.add('voted');
-    updateRanking();
+    drawPieChart();
   }
 
-  function updateRanking() {
-    var section = document.getElementById('chartSection');
+  // Draw initial placeholder
+  drawPieChart();
+
+  function drawPieChart() {
     var canvas = document.getElementById('pieChart');
     var ctx = canvas.getContext('2d');
 
     var voted = Object.keys(votes).filter(function(id) { return votes[id].count > 0; });
 
-    if (voted.length === 0) {
-      section.classList.remove('visible');
-      return;
-    }
-
-    section.classList.add('visible');
-
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    var total = voted.reduce(function(sum, id) { return sum + votes[id].count; }, 0);
     var cx = canvas.width / 2;
     var cy = canvas.height / 2;
     var radius = 60;
+
+    // No votes yet — draw placeholder
+    if (voted.length === 0) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.fillStyle = '#8892b0';
+      ctx.font = '12px Poppins, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('No votes yet', cx, cy);
+      return;
+    }
+
+    var total = voted.reduce(function(sum, id) { return sum + votes[id].count; }, 0);
     var startAngle = -Math.PI / 2;
 
     voted.forEach(function(id) {
@@ -883,7 +888,6 @@
       ctx.fillStyle = color;
       ctx.fill();
 
-      // Subtle gap between slices
       ctx.strokeStyle = '#16213e';
       ctx.lineWidth = 2;
       ctx.stroke();
