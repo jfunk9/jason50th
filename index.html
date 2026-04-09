@@ -224,18 +224,24 @@
     background: rgba(245, 166, 35, 0.1);
   }
 
-  .mix-dot {
-    width: 8px;
-    height: 8px;
+  .mix-num {
+    font-size: 11px;
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex-shrink: 0;
-    opacity: 0.4;
+    opacity: 0.5;
     transition: opacity 0.2s ease;
+    color: #fff;
   }
 
-  .mix-item.voted .mix-dot {
+  .mix-item.voted .mix-num {
     opacity: 1;
-    box-shadow: 0 0 6px currentColor;
+    box-shadow: 0 0 8px currentColor;
   }
 
   .mix-play {
@@ -561,8 +567,8 @@
     </div>
 
     <ul class="mix-list" id="mixList">
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/00A%20Halloween%2099%20Super%20Dub%20ft.%20Funk.mp3" data-id="halloween-99" data-color="#e94560">
-        <span class="mix-dot" style="background:#e94560;color:#e94560"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/00A%20Halloween%2099%20Super%20Dub%20ft.%20Funk.mp3" data-id="halloween-99" data-color="#e94560" data-num="1">
+        <span class="mix-num" style="background:#e94560;color:#fff">1</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Halloween 99 Super Dub ft. Funk</p>
@@ -571,8 +577,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/01B%2020th%20Historical%20Evidence%201999.mp3" data-id="historical-evidence" data-color="#f5a623">
-        <span class="mix-dot" style="background:#f5a623;color:#f5a623"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/01B%2020th%20Historical%20Evidence%201999.mp3" data-id="historical-evidence" data-color="#f5a623" data-num="2">
+        <span class="mix-num" style="background:#f5a623;color:#fff">2</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Historical Evidence</p>
@@ -581,8 +587,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/03B%20Daytona%20500.mp3" data-id="daytona-500" data-color="#3b82f6">
-        <span class="mix-dot" style="background:#3b82f6;color:#3b82f6"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/03B%20Daytona%20500.mp3" data-id="daytona-500" data-color="#3b82f6" data-num="3">
+        <span class="mix-num" style="background:#3b82f6;color:#fff">3</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Daytona 500</p>
@@ -591,8 +597,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/05B%20Funk%20In%202000%20%28DJ%20Shadow%20Mix%29.mp3" data-id="shadow-mix" data-color="#8b5cf6">
-        <span class="mix-dot" style="background:#8b5cf6;color:#8b5cf6"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/05B%20Funk%20In%202000%20%28DJ%20Shadow%20Mix%29.mp3" data-id="shadow-mix" data-color="#8b5cf6" data-num="4">
+        <span class="mix-num" style="background:#8b5cf6;color:#fff">4</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Funk In 2000 (DJ Shadow Mix)</p>
@@ -601,8 +607,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/04A%20The%20Silencer.mp3" data-id="silencer" data-color="#10b981">
-        <span class="mix-dot" style="background:#10b981;color:#10b981"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/04A%20The%20Silencer.mp3" data-id="silencer" data-color="#10b981" data-num="5">
+        <span class="mix-num" style="background:#10b981;color:#fff">5</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">The Silencer</p>
@@ -611,8 +617,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202002.mp3" data-id="em-2002" data-color="#ec4899">
-        <span class="mix-dot" style="background:#ec4899;color:#ec4899"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202002.mp3" data-id="em-2002" data-color="#ec4899" data-num="6">
+        <span class="mix-num" style="background:#ec4899;color:#fff">6</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Essential Mix</p>
@@ -621,8 +627,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202003.mp3" data-id="em-2003" data-color="#06b6d4">
-        <span class="mix-dot" style="background:#06b6d4;color:#06b6d4"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202003.mp3" data-id="em-2003" data-color="#06b6d4" data-num="7">
+        <span class="mix-num" style="background:#06b6d4;color:#fff">7</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Essential Mix</p>
@@ -631,8 +637,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202022%20-%20The7thFloor_2d%20(24%20Mix).mp3" data-id="7th-floor" data-color="#f97316">
-        <span class="mix-dot" style="background:#f97316;color:#f97316"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202022%20-%20The7thFloor_2d%20(24%20Mix).mp3" data-id="7th-floor" data-color="#f97316" data-num="8">
+        <span class="mix-num" style="background:#f97316;color:#fff">8</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">The 7th Floor 2d</p>
@@ -641,8 +647,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202023%20-%20Deep%20Freezethon%204a%20(24%20Mix).mp3" data-id="freezethon" data-color="#a855f7">
-        <span class="mix-dot" style="background:#a855f7;color:#a855f7"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202023%20-%20Deep%20Freezethon%204a%20(24%20Mix).mp3" data-id="freezethon" data-color="#a855f7" data-num="9">
+        <span class="mix-num" style="background:#a855f7;color:#fff">9</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">Deep Freezethon 4a</p>
@@ -651,8 +657,8 @@
         </div>
         <button class="mix-vote-btn">Vote</button>
       </li>
-      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202024%20-%20TheCovid_1j%20(24%20Mix).mp3" data-id="covid-1j" data-color="#eab308">
-        <span class="mix-dot" style="background:#eab308;color:#eab308"></span>
+      <li class="mix-item" data-src="https://media.abstracti.co/audio/Essential%20Mix/01%20Essential%20Mix%202024%20-%20TheCovid_1j%20(24%20Mix).mp3" data-id="covid-1j" data-color="#eab308" data-num="10">
+        <span class="mix-num" style="background:#eab308;color:#fff">10</span>
         <button class="mix-play">&#9654;</button>
         <div class="mix-info">
           <p class="mix-name">TheCovid 1j</p>
@@ -879,6 +885,7 @@
     voted.forEach(function(id) {
       var item = document.querySelector('.mix-item[data-id="' + id + '"]');
       var color = item.dataset.color;
+      var num = item.dataset.num;
       var sliceAngle = (votes[id].count / total) * 2 * Math.PI;
 
       ctx.beginPath();
@@ -891,6 +898,17 @@
       ctx.strokeStyle = '#16213e';
       ctx.lineWidth = 2;
       ctx.stroke();
+
+      // Draw number in the middle of the slice
+      var midAngle = startAngle + sliceAngle / 2;
+      var labelR = radius * 0.6;
+      var lx = cx + Math.cos(midAngle) * labelR;
+      var ly = cy + Math.sin(midAngle) * labelR;
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 13px Poppins, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(num, lx, ly);
 
       startAngle += sliceAngle;
     });
