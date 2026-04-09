@@ -20,7 +20,6 @@
     margin: 0 auto;
     background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     border-radius: 12px;
-    overflow: hidden;
   }
 
   .header {
@@ -318,6 +317,133 @@
     transition: width 0.3s linear;
   }
 
+  /* VOLUME CONTROL */
+  .volume-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto 0;
+    max-width: 200px;
+  }
+
+  .volume-icon {
+    font-size: 16px;
+    color: #8892b0;
+    cursor: pointer;
+  }
+
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 120px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.12);
+    outline: none;
+    cursor: pointer;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #f5a623;
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(245, 166, 35, 0.4);
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #f5a623;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 6px rgba(245, 166, 35, 0.4);
+  }
+
+  .volume-pct {
+    font-size: 11px;
+    color: #8892b0;
+    min-width: 30px;
+    text-align: right;
+  }
+
+  /* RANKING SECTION */
+  .ranking-section {
+    max-width: 520px;
+    margin: 25px auto 10px;
+    text-align: left;
+    display: none;
+  }
+
+  .ranking-section.visible {
+    display: block;
+  }
+
+  .ranking-title {
+    font-size: 13px;
+    color: #8892b0;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0 0 12px;
+    text-align: center;
+  }
+
+  .rank-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .rank-item:first-child {
+    background: rgba(245, 166, 35, 0.1);
+  }
+
+  .rank-num {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f5a623;
+    min-width: 28px;
+  }
+
+  .rank-item:first-child .rank-num {
+    font-size: 22px;
+  }
+
+  .rank-name {
+    flex: 1;
+    font-size: 14px;
+    color: #ccd6f6;
+  }
+
+  .rank-votes {
+    font-size: 13px;
+    color: #8892b0;
+  }
+
+  .rank-bar-bg {
+    width: 80px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .rank-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #e94560, #f5a623);
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
   .vote-link {
     display: inline-block;
     margin-top: 16px;
@@ -463,6 +589,12 @@
 
     <audio id="previewPlayer" preload="none"></audio>
 
+    <div class="volume-control">
+      <span class="volume-icon" id="muteToggle" onclick="toggleMute()">&#128266;</span>
+      <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="20" oninput="setVolume(this.value)">
+      <span class="volume-pct" id="volumePct">20%</span>
+    </div>
+
     <ul class="mix-list" id="mixList">
       <li class="mix-item" data-src="https://media.abstracti.co/audio/Mix%20Tape%20Series/00A%20Halloween%2099%20Super%20Dub%20ft.%20Funk.mp3" data-id="halloween-99">
         <button class="mix-play" onclick="togglePreview(this)">&#9654;</button>
@@ -555,6 +687,11 @@
         <button class="mix-vote-btn" onclick="vote(this, 'covid-1j')">Vote</button>
       </li>
     </ul>
+
+    <div class="ranking-section" id="ranking">
+      <p class="ranking-title">Current Rankings</p>
+      <div id="rankList"></div>
+    </div>
   </div>
 
   <div class="footer">
@@ -565,12 +702,39 @@
 
 <script>
   const player = document.getElementById('previewPlayer');
+  const volumeSlider = document.getElementById('volumeSlider');
+  const volumePct = document.getElementById('volumePct');
+  const muteToggle = document.getElementById('muteToggle');
   let currentBtn = null;
   let currentBar = null;
   let currentFill = null;
   let progressInterval = null;
+  let lastVolume = 0.2;
 
-  player.volume = 0.4;
+  player.volume = 0.2;
+
+  function setVolume(val) {
+    const v = val / 100;
+    player.volume = v;
+    lastVolume = v;
+    volumePct.textContent = val + '%';
+    muteToggle.innerHTML = v === 0 ? '&#128264;' : '&#128266;';
+  }
+
+  function toggleMute() {
+    if (player.volume > 0) {
+      lastVolume = player.volume;
+      player.volume = 0;
+      volumeSlider.value = 0;
+      volumePct.textContent = '0%';
+      muteToggle.innerHTML = '&#128264;';
+    } else {
+      player.volume = lastVolume || 0.2;
+      volumeSlider.value = Math.round(player.volume * 100);
+      volumePct.textContent = Math.round(player.volume * 100) + '%';
+      muteToggle.innerHTML = '&#128266;';
+    }
+  }
 
   // When track ends naturally, reset the button
   player.addEventListener('ended', () => {
@@ -641,18 +805,78 @@
     currentBtn = null;
   }
 
-  function vote(btn, mixId) {
-    // Clear all votes
-    document.querySelectorAll('.mix-vote-btn').forEach(b => {
-      b.classList.remove('voted');
-      b.textContent = 'Vote';
-    });
-    document.querySelectorAll('.mix-item').forEach(i => i.classList.remove('voted'));
+  const MAX_VOTES = 2;
+  const votes = {};
+  const selectedVotes = new Set();
 
-    // Set this vote
+  // Initialize vote counts
+  document.querySelectorAll('.mix-item').forEach(item => {
+    const id = item.dataset.id;
+    const name = item.querySelector('.mix-name').textContent;
+    votes[id] = { name: name, count: 0 };
+  });
+
+  function vote(btn, mixId) {
+    const item = btn.closest('.mix-item');
+
+    // If already voted for this, unvote
+    if (selectedVotes.has(mixId)) {
+      selectedVotes.delete(mixId);
+      votes[mixId].count--;
+      btn.classList.remove('voted');
+      btn.textContent = 'Vote';
+      item.classList.remove('voted');
+      updateRanking();
+      return;
+    }
+
+    // If at max votes, don't allow more
+    if (selectedVotes.size >= MAX_VOTES) {
+      // Flash the button to indicate limit
+      btn.style.borderColor = '#e94560';
+      btn.textContent = 'Max 2!';
+      setTimeout(() => {
+        btn.style.borderColor = '';
+        btn.textContent = 'Vote';
+      }, 1000);
+      return;
+    }
+
+    // Cast vote
+    selectedVotes.add(mixId);
+    votes[mixId].count++;
     btn.classList.add('voted');
     btn.textContent = 'Voted!';
-    btn.closest('.mix-item').classList.add('voted');
+    item.classList.add('voted');
+    updateRanking();
+  }
+
+  function updateRanking() {
+    const ranking = document.getElementById('ranking');
+    const rankList = document.getElementById('rankList');
+
+    // Sort by votes descending
+    const sorted = Object.entries(votes)
+      .filter(([id, data]) => data.count > 0)
+      .sort((a, b) => b[1].count - a[1].count);
+
+    if (sorted.length === 0) {
+      ranking.classList.remove('visible');
+      return;
+    }
+
+    ranking.classList.add('visible');
+    const maxVotes = sorted[0][1].count;
+
+    rankList.innerHTML = sorted.map(([id, data], i) => {
+      const barWidth = maxVotes > 0 ? (data.count / MAX_VOTES) * 100 : 0;
+      return `
+        <div class="rank-item">
+          <span class="rank-num">${i + 1}.</span>
+          <span class="rank-name">${data.name}</span>
+          <div class="rank-bar-bg"><div class="rank-bar" style="width: ${barWidth}%"></div></div>
+        </div>`;
+    }).join('');
   }
 </script>
 </body>
