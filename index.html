@@ -1050,14 +1050,19 @@
   document.querySelectorAll('.progress-bar').forEach(function(bar) {
     bar.addEventListener('mousedown', function(e) {
       if (!currentBtn) return;
-      // Only scrub the active track's bar
       var item = bar.closest('.mix-item');
       var playBtn = item.querySelector('.mix-play');
       if (playBtn !== currentBtn) return;
       e.stopPropagation();
+      e.preventDefault();
       mixScrubbing = true;
       mixScrubBar = bar;
       mixScrubTo(e);
+    });
+
+    bar.addEventListener('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
     });
 
     bar.addEventListener('touchstart', function(e) {
