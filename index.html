@@ -997,6 +997,7 @@
     player.currentTime = pct * player.duration;
     npFill.style.width = (pct * 100) + '%';
     npTime.textContent = formatTime(player.currentTime);
+    if (player.paused) player.play();
   }
 
   npBarEl.addEventListener('mousedown', function(e) {
@@ -1043,6 +1044,7 @@
     fill.style.width = (pct * 100) + '%';
     npFill.style.width = (pct * 100) + '%';
     npTime.textContent = formatTime(player.currentTime);
+    if (player.paused) player.play();
   }
 
   document.querySelectorAll('.progress-bar').forEach(function(bar) {
