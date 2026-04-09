@@ -410,6 +410,26 @@
   .pie-canvas {
     display: block;
     margin: 0 auto;
+    cursor: pointer;
+  }
+
+  .pie-tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    pointer-events: none;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    z-index: 10;
+  }
+
+  .pie-tooltip.visible {
+    opacity: 1;
   }
 
   .vote-link {
@@ -538,10 +558,11 @@
           <p class="detail-note">Seriously, just come</p>
         </div>
       </div>
-      <div style="text-align:center;padding-top:20px;">
+      <div style="text-align:center;padding-top:20px;position:relative;">
         <button class="vote-link" onclick="document.getElementById('poll').scrollIntoView({behavior:'smooth'})">&#127911; Vote for the mix</button>
-        <div class="chart-section" id="chartSection">
-          <canvas id="pieChart" class="pie-canvas" width="140" height="140"></canvas>
+        <div class="chart-section" id="chartSection" style="position:relative;">
+          <canvas id="pieChart" class="pie-canvas" width="160" height="160"></canvas>
+          <div class="pie-tooltip" id="pieTooltip"></div>
         </div>
       </div>
     </div>
@@ -691,6 +712,7 @@
   var MAX_VOTES = 2;
   var votes = {};
   var selectedVotes = {};
+  var sliceData = []; // store slice angles for hover detection
 
   player.volume = 0.2;
 
@@ -855,10 +877,11 @@
     var voted = Object.keys(votes).filter(function(id) { return votes[id].count > 0; });
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    sliceData = [];
 
     var cx = canvas.width / 2;
     var cy = canvas.height / 2;
-    var radius = 60;
+    var radius = 68;
 
     if (voted.length === 0) {
       ctx.beginPath();
@@ -881,7 +904,18 @@
       var item = document.querySelector('.mix-item[data-id="' + id + '"]');
       var color = item.dataset.color;
       var num = item.dataset.num;
+      var name = item.querySelector('.mix-name').textContent;
       var sliceAngle = (votes[id].count / total) * 2 * Math.PI;
+
+      // Store slice data for hover detection
+      sliceData.push({
+        startAngle: startAngle,
+        endAngle: startAngle + sliceAngle,
+        color: color,
+        num: num,
+        name: name,
+        id: id
+      });
 
       ctx.beginPath();
       ctx.moveTo(cx, cy);
@@ -895,11 +929,11 @@
       ctx.stroke();
 
       var midAngle = startAngle + sliceAngle / 2;
-      var labelR = radius * 0.6;
+      var labelR = radius * 0.55;
       var lx = cx + Math.cos(midAngle) * labelR;
       var ly = cy + Math.sin(midAngle) * labelR;
       ctx.fillStyle = '#fff';
-      ctx.font = 'bold 13px Poppins, sans-serif';
+      ctx.font = 'bold 12px Poppins, sans-serif';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(num, lx, ly);
@@ -907,6 +941,66 @@
       startAngle += sliceAngle;
     });
   }
+
+  // Hover detection on pie chart
+  var pieCanvas = document.getElementById('pieChart');
+  var tooltip = document.getElementById('pieTooltip');
+  var cx = pieCanvas.width / 2;
+  var cy = pieCanvas.height / 2;
+  var radius = 68;
+
+  pieCanvas.addEventListener('mousemove', function(e) {
+    var rect = pieCanvas.getBoundingClientRect();
+    var mx = e.clientX - rect.left;
+    var my = e.clientY - rect.top;
+
+    // Scale for any CSS sizing
+    var scaleX = pieCanvas.width / rect.width;
+    var scaleY = pieCanvas.height / rect.height;
+    mx *= scaleX;
+    my *= scaleY;
+
+    var dx = mx - cx;
+    var dy = my - cy;
+    var dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (dist > radius || sliceData.length === 0) {
+      tooltip.classList.remove('visible');
+      return;
+    }
+
+    var angle = Math.atan2(dy, dx);
+    // Normalize angle to match our startAngle of -PI/2
+    if (angle < -Math.PI / 2) angle += Math.PI * 2;
+
+    var found = null;
+    for (var i = 0; i < sliceData.length; i++) {
+      var s = sliceData[i];
+      var start = s.startAngle;
+      var end = s.endAngle;
+      if (angle >= start && angle < end) {
+        found = s;
+        break;
+      }
+    }
+
+    if (found) {
+      tooltip.textContent = found.num + '. ' + found.name;
+      tooltip.style.borderLeft = '3px solid ' + found.color;
+      // Position tooltip near cursor
+      var tipX = e.clientX - rect.left + 12;
+      var tipY = e.clientY - rect.top - 28;
+      tooltip.style.left = tipX + 'px';
+      tooltip.style.top = tipY + 'px';
+      tooltip.classList.add('visible');
+    } else {
+      tooltip.classList.remove('visible');
+    }
+  });
+
+  pieCanvas.addEventListener('mouseleave', function() {
+    tooltip.classList.remove('visible');
+  });
 })();
 </script>
 </body>
