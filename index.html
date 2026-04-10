@@ -515,6 +515,25 @@
     flex-shrink: 0;
   }
 
+  .rsvp-buttons { display: flex; gap: 10px; margin-top: 6px; }
+  .rsvp-btn {
+    padding: 6px 22px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid rgba(245, 166, 35, 0.4);
+    border-radius: 50px;
+    background: none;
+    color: #f5a623;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .rsvp-btn:hover { background: rgba(245, 166, 35, 0.15); border-color: #f5a623; }
+  .rsvp-btn.selected { background: #f5a623; color: #1a1a2e; border-color: #f5a623; }
+  .rsvp-btn.selected-no { background: rgba(255,255,255,0.15); color: #aaa; border-color: rgba(255,255,255,0.2); }
+  .rsvp-msg { margin-top: 6px; font-size: 13px; color: #ccc; font-style: italic; }
+
   .vote-link {
     display: inline-block;
     margin-top: 16px;
@@ -637,8 +656,11 @@
         <div class="detail-icon">&#9989;</div>
         <div>
           <p class="detail-label">RSVP</p>
-          <p class="detail-value"><a href="https://docs.google.com/forms/d/e/1FAIpQLSfyZ0C1FPAAE70RuhGfiOF6IbliP6lES_v8CXQTUw7evWgeQA/viewform" target="_blank" style="color:#f5a623;text-decoration:underline;">Let me know you're coming</a></p>
-          <p class="detail-note">So I know how much food to get</p>
+          <div class="rsvp-buttons">
+            <button class="rsvp-btn" id="rsvpYes" onclick="rsvpClick('yes')">I'm in</button>
+            <button class="rsvp-btn" id="rsvpNo" onclick="rsvpClick('no')">Can't make it</button>
+          </div>
+          <p class="rsvp-msg" id="rsvpMsg"></p>
         </div>
       </div>
       <div style="text-align:center;padding-top:20px;position:relative;">
@@ -753,6 +775,27 @@
   var progressInterval = null;
   var lastVolume = 0.2;
   var MAX_VOTES = 2;
+  var rsvpYesCount = 0;
+  var rsvpNoCount = 0;
+  var yesMessages = ["See you there!", "Let's go!", "It's gonna be a good time.", "Locked in."];
+  var noMessages = ["Bummer. You'll be missed.", "Noted. We'll save you a slice... maybe.", "All good, next time."];
+  function rsvpClick(choice) {
+    var yesBtn = document.getElementById('rsvpYes');
+    var noBtn = document.getElementById('rsvpNo');
+    var msg = document.getElementById('rsvpMsg');
+    yesBtn.classList.remove('selected','selected-no');
+    noBtn.classList.remove('selected','selected-no');
+    if (choice === 'yes') {
+      rsvpYesCount++;
+      yesBtn.classList.add('selected');
+      msg.textContent = yesMessages[Math.floor(Math.random() * yesMessages.length)];
+    } else {
+      rsvpNoCount++;
+      noBtn.classList.add('selected-no');
+      msg.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
+    }
+  }
+
   var votes = {};
   var selectedVotes = {};
   var sliceData = [];
