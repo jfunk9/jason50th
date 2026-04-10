@@ -515,14 +515,15 @@
     flex-shrink: 0;
   }
 
-  .rsvp-buttons { display: flex; gap: 10px; margin-top: 6px; }
+  .rsvp-buttons { display: flex; gap: 14px; margin-top: 10px; justify-content: center; }
   .rsvp-btn {
-    padding: 6px 22px;
+    padding: 14px 36px;
     font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-    letter-spacing: 1.5px;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    border: 1px solid rgba(245, 166, 35, 0.4);
+    border: 2px solid rgba(245, 166, 35, 0.5);
     border-radius: 50px;
     background: none;
     color: #f5a623;
@@ -652,18 +653,29 @@
           <p class="detail-note">Retro games (Tecmo SB) and/or Loons on the big screen,<br>DJ Funk on the 1's and 2's (kinda), and a few more surprises.</p>
         </div>
       </div>
-      <div class="detail-row">
-        <div class="detail-icon">&#9989;</div>
-        <div>
-          <p class="detail-label">RSVP</p>
-          <div class="rsvp-buttons">
-            <button class="rsvp-btn" id="rsvpYes" onclick="rsvpClick('yes')">I'm in</button>
-            <button class="rsvp-btn" id="rsvpNo" onclick="rsvpClick('no')">Can't make it</button>
-          </div>
-          <p class="rsvp-msg" id="rsvpMsg"></p>
+      <div style="text-align:center;padding:30px 0 10px;">
+        <p class="detail-label" style="text-align:center;font-size:15px;">RSVP</p>
+        <div class="rsvp-buttons">
+          <button class="rsvp-btn" id="rsvpYes" onclick="rsvpClick('yes')">I'm in</button>
+          <button class="rsvp-btn" id="rsvpNo" onclick="rsvpClick('no')">Can't make it</button>
         </div>
+        <p class="rsvp-msg" id="rsvpMsg"></p>
+        <p class="detail-note" style="text-align:center;margin-top:8px;">Bring your +1 or 2 or 3 ;)</p>
       </div>
-      <div style="text-align:center;padding-top:20px;position:relative;">
+
+      <div class="divider"></div>
+
+      <p class="closing">
+        Half a century down. Let's make some noise about it.
+      </p>
+      <p class="signature">&mdash; Jason</p>
+
+      <div style="text-align:center;padding-top:10px;">
+        <p class="poll-title" style="font-size:18px;">Vote for the party playlist</p>
+        <p class="poll-subtitle" style="font-size:13px;">Preview a clip, pick your favorite. DJ Funk takes requests... sometimes.</p>
+      </div>
+
+      <div style="text-align:center;padding-top:10px;position:relative;">
         <button class="vote-link" onclick="document.getElementById('poll').scrollIntoView({behavior:'smooth'})">&#127911; Vote for the mix</button>
         <div class="chart-section" id="chartSection" style="position:relative;">
           <canvas id="pieChart" class="pie-canvas" width="240" height="240"></canvas>
@@ -682,18 +694,10 @@
       </div>
     </div>
 
-    <div class="divider"></div>
-
-    <p class="closing">
-      Half a century down. Let's make some noise about it.
-    </p>
-    <p class="signature">&mdash; Jason</p>
   </div>
 
   <!-- POLL SECTION -->
   <div class="poll-section" id="poll">
-    <p class="poll-title">Vote for the party playlist</p>
-    <p class="poll-subtitle">Preview a clip, pick your favorite. DJ Funk takes requests... sometimes.</p>
 
     <audio id="previewPlayer" preload="none"></audio>
 
