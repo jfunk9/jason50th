@@ -530,6 +530,7 @@
     cursor: pointer;
     transition: all 0.3s ease;
   }
+  a.rsvp-btn { text-decoration: none; }
   .rsvp-btn:hover { background: rgba(245, 166, 35, 0.15); border-color: #f5a623; }
   .rsvp-btn.selected { background: #f5a623; color: #1a1a2e; border-color: #f5a623; }
   .rsvp-btn.selected-no { background: rgba(255,255,255,0.15); color: #aaa; border-color: rgba(255,255,255,0.2); }
@@ -656,7 +657,7 @@
       <div style="text-align:center;padding:30px 0 10px;">
         <p class="detail-label" style="text-align:center;font-size:15px;">RSVP</p>
         <div class="rsvp-buttons">
-          <button class="rsvp-btn" id="rsvpYes" onclick="rsvpClick('yes')">I'm in</button>
+          <a class="rsvp-btn" id="rsvpYes" href="https://docs.google.com/forms/d/e/1FAIpQLSfyZ0C1FPAAE70RuhGfiOF6IbliP6lES_v8CXQTUw7evWgeQA/viewform" target="_blank" onclick="rsvpClick('yes')">I'm in</a>
           <button class="rsvp-btn" id="rsvpNo" onclick="rsvpClick('no')">Can't make it</button>
         </div>
         <p class="rsvp-msg" id="rsvpMsg"></p>
@@ -775,7 +776,8 @@
   var rsvpYesCount = 0;
   var rsvpNoCount = 0;
   var yesMessages = ["See you there!", "Let's go!", "It's gonna be a good time.", "Locked in."];
-  var noMessages = ["Bummer. You'll be missed.", "Noted. We'll save you a slice... maybe.", "All good, next time."];
+  var noMessages = ["Bummer. You'll be missed.", "Wow. Bold move.", "Noted. We'll save you a slice... maybe.", "Really? On my birthday?", "All good, next time... if there is one.", "I'm not mad, just disappointed."];
+  var formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfyZ0C1FPAAE70RuhGfiOF6IbliP6lES_v8CXQTUw7evWgeQA/viewform";
   function rsvpClick(choice) {
     var yesBtn = document.getElementById('rsvpYes');
     var noBtn = document.getElementById('rsvpNo');
@@ -783,11 +785,9 @@
     yesBtn.classList.remove('selected','selected-no');
     noBtn.classList.remove('selected','selected-no');
     if (choice === 'yes') {
-      rsvpYesCount++;
       yesBtn.classList.add('selected');
       msg.textContent = yesMessages[Math.floor(Math.random() * yesMessages.length)];
     } else {
-      rsvpNoCount++;
       noBtn.classList.add('selected-no');
       msg.textContent = noMessages[Math.floor(Math.random() * noMessages.length)];
     }
