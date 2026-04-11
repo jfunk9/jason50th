@@ -778,7 +778,7 @@
   var yesMessages = ["See you there!", "Let's go!", "It's gonna be a good time.", "Locked in."];
   var noMessages = ["Bummer. You'll be missed.", "Wow. Bold move.", "Noted. We'll save you a slice... maybe.", "Really? On my birthday?", "All good, next time... if there is one.", "I'm not mad, just disappointed."];
   var formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfyZ0C1FPAAE70RuhGfiOF6IbliP6lES_v8CXQTUw7evWgeQA/viewform";
-  function rsvpClick(choice) {
+  window.rsvpClick = function(choice) {
     var yesBtn = document.getElementById('rsvpYes');
     var noBtn = document.getElementById('rsvpNo');
     var msg = document.getElementById('rsvpMsg');
